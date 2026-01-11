@@ -1,0 +1,59 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.container{
+    background-color: rgb(65, 65, 82);
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+    
+
+}
+
+/* .text{
+    height: 40px;
+    width: 100%;
+} */
+
+.text .input{
+    height: 80px;
+    width: 100%;
+    background-color: rgb(42, 70, 74);
+    /* border: none; */
+    padding: 5px;
+    font-size: 1.5rem;
+}
+
+.container > :last-child{
+    display: flex;
+   flex-wrap: wrap;
+   gap: 10px;
+    margin-top: 30px;
+}
+.button{
+  flex: 0 0 calc(33.333% - 10px); /* Ensures three items fit with a gap */
+  /* box-sizing: border-box; */
+  /* Add other styling */
+  height: 50px;
+  background-color: lightgreen;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+ border: none;
+  /* padding: 5px; */
+}
+
+.button:hover{
+    background-color: rgb(21, 158, 21);
+}
