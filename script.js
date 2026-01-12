@@ -12,7 +12,30 @@ let inputFilled = document.createElement('textarea')
 inputFilled.className = 'input'
 inputFilled.placeholder = "6+7.."
 
-const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '+', '-', '/', '*', '=', 'C', 'del', 'his', 'c']
+const histoverlay = document.createElement('div')
+
+const his=document.createElement('div')
+his.id='hisCont'
+
+const historyContent = document.createElement('div')
+histoverlay.className = 'history'
+his.appendChild(historyContent)
+
+const h2=document.createElement('h2')
+h2.textContent='HISTORY'
+h2.id='heading'
+
+const clearhistorybtn=document.createElement('div')
+clearhistorybtn.textContent='clear hisotry'
+clearhistorybtn.id='clear'
+
+histoverlay.append(h2,his,clearhistorybtn)
+
+const overlay = document.createElement('div')
+overlay.className = 'overlay'
+overlay.append(histoverlay)
+
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '+', '-', '/', '*', '=', 'C', 'del', 'his']
 const frag = document.createDocumentFragment()
 list.forEach(number => {
     const n = document.createElement('button')
@@ -20,19 +43,23 @@ list.forEach(number => {
     n.textContent = number
     frag.appendChild(n)
 })
+
 const div = document.createElement('div')
-div.appendChild(frag)
+div.className = 'buttonDiv'
+div.append(frag)
+
+const anotherDiv = document.createElement('div')
+anotherDiv.append(div)
 
 let l = []
 container.addEventListener('click', (e) => {
-    // console.log(e.target);
-
+   
     if (e.target.classList.contains('button')) {
-        n = e.target.textContent
+        let n = e.target.textContent
+
         if (n === 'C') {
             l.length = 0
             inputFilled.value = ''
-
         }
 
         else if (n == '=') {
@@ -40,19 +67,21 @@ container.addEventListener('click', (e) => {
             inputFilled.value = s
             l = [String(s)]
         }
+       
         else if (n === 'del') {
             l.pop()
             inputFilled.value = l.join('')
-
-        } else if (n === 'his') {
-            const history = getlocal()
-            console.log(typeof history);
-
-            alert(history.length ? history.join('\n') : 'No history')
+        } 
+        
+        else if (n === 'his') { 
+                const history = getlocal()
+                historyContent.textContent=history.length
+                    ? history.join('\n')
+                    : 'No history'
+                overlay.classList.remove('hidden')
+            
         }
-        else if (n === 'c') {
-            clearHistory()
-        }
+
         else {
             l.push(n)
             inputFilled.value += n
@@ -60,12 +89,20 @@ container.addEventListener('click', (e) => {
     }
 })
 
+overlay.addEventListener('click', () => {
+    overlay.classList.add('hidden')
+})
 
 
 function tokenize(expr) {
 
     return expr ? expr.match(/\d+|[+\-*/]/g) : []
 }
+
+clearhistorybtn.addEventListener('click',()=>{
+    clearHistory()
+    his.textContent=''
+})
 
 function compute(tokens) {
     let stack = []
@@ -76,7 +113,20 @@ function compute(tokens) {
         if (t === '*' || t === '/') {
             let prev = Number(stack.pop())
             let next = Number(tokens[++i])
-            let result = t === '*' ? prev * next : prev / next
+            let result=0
+            if(t==='*'){
+                result=prev*next
+            }else{
+                if(next===0){
+                    alert('invalid number')
+                    
+                    break
+                }else{
+                     result=prev/next
+                }
+               
+            }
+            // let result = t === '*' ? prev * next : prev / next
             stack.push(result)
         } else {
             stack.push(t)
@@ -84,7 +134,11 @@ function compute(tokens) {
     }
 
     // handle + and -
-    let result = Number(stack[0])
+    let result =0
+    if(stack[0].includes('-')){
+        result=`${( Number(stack[0]))}`
+    }
+    
     for (let i = 1; i < stack.length; i += 2) {
         let op = stack[i]
         let num = Number(stack[i + 1])
@@ -104,7 +158,7 @@ function calculate() {
 
 
 }
-
+let i='hist'
 function clearHistory() {
     localStorage.removeItem(i)
 }
@@ -116,7 +170,7 @@ function setlocal(value) {
     }
 
     attr.unshift(value)
-    localStorage.setItem('hist', JSON.stringify(attr))
+    localStorage.setItem(i, JSON.stringify(attr))
     console.log('history', attr);
     if (value === 'undefined') {
 
@@ -130,7 +184,7 @@ function getlocal() {
 
 
 text.append(inputFilled)
-container.append(text, div)
+overlay.classList.add('hidden')
+container.append(text, anotherDiv, overlay)
 body.append(container)
-
 

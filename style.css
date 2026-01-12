@@ -1,10 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: #000;
     display: flex;
     justify-content: center;
@@ -12,12 +12,12 @@ body{
     align-items: center;
 }
 
-.container{
+.container {
     background-color: rgb(65, 65, 82);
     padding: 20px;
     border-radius: 10px;
     width: 60%;
-    
+    position: relative;
 
 }
 
@@ -26,7 +26,7 @@ body{
     width: 100%;
 } */
 
-.text .input{
+.text .input {
     height: 80px;
     width: 100%;
     background-color: rgb(42, 70, 74);
@@ -35,25 +35,80 @@ body{
     font-size: 1.5rem;
 }
 
-.container > :last-child{
+.buttonDiv {
     display: flex;
-   flex-wrap: wrap;
-   gap: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 30px;
-}
-.button{
-  flex: 0 0 calc(33.333% - 10px); /* Ensures three items fit with a gap */
-  /* box-sizing: border-box; */
-  /* Add other styling */
-  height: 50px;
-  background-color: lightgreen;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 8px;
- border: none;
-  /* padding: 5px; */
+
 }
 
-.button:hover{
+.button {
+    flex: 0 0 calc(33.333% - 10px);
+    /* Ensures three items fit with a gap */
+    /* box-sizing: border-box; */
+    /* Add other styling */
+    height: 50px;
+    background-color: lightgreen;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    /* padding: 5px; */
+}
+
+.button:hover {
     background-color: rgb(21, 158, 21);
+}
+
+.overlay {
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    top: 23.5%;
+    right: 0;
+    backdrop-filter: rgba(0, 0, 0, 0.5);
+}
+
+.hidden {
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+.history {
+    margin-left: 50%;
+   background-color: rgb(68, 63, 63);
+    z-index: 10000;
+    width: 200px;
+    height: 380px;
+    right: 0;
+   padding: 8px;
+   line-height: 1.7rem;
+    white-space: pre-wrap;
+   color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 2px #272626;
+}
+
+#heading {
+    font-weight: bold;
+    color: white;
+
+}
+
+#clear{
+    background-color: rgba(32, 118, 231, 0.634);
+    color: black;
+    font-weight: bolder;
+    padding: 8px;
+    font-size: 1.3rem;
+    border-radius: 8px;
+    box-shadow: 0 0 4px 1px white;
+}
+#hisCont{
+    height: 300px;
+     overflow: auto;
 }
